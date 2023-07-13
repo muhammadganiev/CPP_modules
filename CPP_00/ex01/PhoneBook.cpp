@@ -6,7 +6,7 @@
 /*   By: muganiev <muganiev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:09:29 by muganiev          #+#    #+#             */
-/*   Updated: 2023/07/08 20:57:37 by muganiev         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:31:27 by muganiev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int 	PhoneBook::printPhonebook()
 {
 	int i;
 
-	std::cout << "+--------------------------------------+\n";
-	std::cout << "|Index| FirstName| LastName | NickName |\n";
-	std::cout << "+--------------------------------------+\n";
+	std::cout << "+---------------------------------------+\n";
+	std::cout << "| Index| FirstName|  LastName|  NickName|\n";
+	std::cout << "+---------------------------------------+\n";
 
 	for (i = 0; i < COUNT_N; i++)
 	{
