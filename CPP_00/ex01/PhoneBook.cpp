@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muganiev <muganiev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: muganiev <muganiev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:09:29 by muganiev          #+#    #+#             */
-/*   Updated: 2023/07/13 18:31:27 by muganiev         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:21:59 by muganiev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,22 @@ int 	PhoneBook::printPhonebook()
 {
 	int i;
 
-	std::cout << "+---------------------------------------+\n";
-	std::cout << "| Index| FirstName|  LastName|  NickName|\n";
-	std::cout << "+---------------------------------------+\n";
+	std::cout << "+-------------------------------------------+\n";
+	std::cout << "|     Index| FirstName|  LastName|  NickName|\n";
+	std::cout << "+-------------------------------------------+\n";
 
 	for (i = 0; i < COUNT_N; i++)
 	{
 		if (arr[i].getFirstname().empty())
 			break;
-		std::cout << "|" << std::setw(5) << i + 1 << "|";
+		std::cout << "|" << std::setw(10) << i + 1 << "|";
 		printAtributW10(arr[i].getFirstname());
 		printAtributW10(arr[i].getLastname());
 		printAtributW10(arr[i].getNickname());
 		std::cout << "\n";
 	}
 
-	std::cout << "+--------------------------------------+\n";
+	std::cout << "+-------------------------------------------+\n";
 	return i;
 }
 
