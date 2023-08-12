@@ -17,20 +17,18 @@
 # include <iostream>
 # include <algorithm>
 
-class	Zombie
+class Zombie
 {
-	private:
-		std::string	_name;
-	public:
-		Zombie(std::string name);
-		Zombie(void);
-		~Zombie(void);
-		void	announce(void);
-		void	setName(std::string name);
+private:
+	std::string	name;
+public:
+	Zombie();
+	~Zombie();
+	void		setName(std::string Name);
+	std::string	getName() const;
+	void		announce();
 };
 
-Zombie	*newZombie(std::string name);
-
-void		randomChump(std::string name);
+Zombie	*zombieHorde(int N, std::string name);
 
 #endif

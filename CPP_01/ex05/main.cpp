@@ -10,15 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Karen.hpp"
+#include "Harl.hpp"
 
-int	main(void)
+int main()
 {
-	Karen k;
-
-	k.complain("DEBUG");
-	k.complain("INFO");
-	k.complain("WARNING");
-	k.complain("ERROR");
-	return (0);
+	Harl harl;
+	harl.complain("312321");
+	std::cout << std::endl;
+	harl.complain("DEBUG");
+	std::cout << std::endl;
+	harl.complain("INFO");
+	std::cout << std::endl;
+	harl.complain("WARNING");
+	std::cout << std::endl;
+	harl.complain("ERROR");
+	std::cout << std::endl;
 }

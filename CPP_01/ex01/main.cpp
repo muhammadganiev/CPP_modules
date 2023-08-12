@@ -12,15 +12,12 @@
 
 #include "Zombie.hpp"
 
-Zombie*	zombieHorde(int N, std::string name);
-
-int	main(void)
+int main()
 {
-	int	size;
-
-	size = 20;
-	Zombie *horde = zombieHorde(size, "Zom");
-	for (int i = 0; i < size; i++)
-		horde[i].announce();
+	int	N = 5;
+	Zombie	*horde = zombieHorde(N, "Muha");
+	if (horde == NULL)
+		return (1);
 	delete [] horde;
+	return (0);
 }

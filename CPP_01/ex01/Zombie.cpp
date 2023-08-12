@@ -12,29 +12,27 @@
 
 #include "Zombie.hpp"
 
-Zombie::Zombie(std::string name)
+Zombie::Zombie()
 {
-	this->_name = name;
-	std::cout << "Zombie object " << this->_name << " created" << std::endl;
-}
-
-Zombie::Zombie(void)
-{
-	this->_name = "(null)";
-	std::cout << "Zombie object " << this->_name << " created" << std::endl;
+	std::cout << "Constructor Caller" << std::endl;
 }
 
 Zombie::~Zombie()
 {
-	std::cout << "Zombie object " << this->_name << " destroyed" << std::endl;
+	std::cout << "Destructor Caller" << std::endl;
 }
 
 void	Zombie::announce()
 {
-	std::cout << this->_name << " BraiiiiiiinnnzzzZ..." << std::endl;
+	std::cout << getName() << ": Braiiiiiiinnnssss..." << std::endl;
 }
 
-void	Zombie::setName(std::string name)
+std::string	Zombie::getName() const
 {
-	this->_name = name;
+	return (this->name);
+}
+
+void	Zombie::setName(std::string Name)
+{
+	this->name = Name;
 }

@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fstream>
-#include <iostream>
-
+#include "Sed.hpp"
 int	replace(char **argv, std::string str)
 {
 	std::ofstream	outfile;
