@@ -1,22 +1,24 @@
-SRC = main.cpp Karen.cpp
-OBJ = $(SRC:.cpp=.o)
-CC = c++
-RM = rm -f
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+NAME = Harl
 
-NAME = Karen
+CXX = c++
+SRCS =	main.cpp		\
+		Harl.cpp
+
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CPPFLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
 clean:
-	$(RM) $(OBJ)
+	rm -f $(OBJS)
 
-fclean: clean
-	$(RM) $(NAME)
+fclean:
+	rm -f $(NAME)
+	rm -f $(OBJS)
 
-re: fclean $(NAME)
+re: fclean all
 
 .PHONY: all clean fclean re
