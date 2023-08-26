@@ -6,44 +6,54 @@
 /*   By: muganiev <muganiev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:59:54 by muganiev          #+#    #+#             */
-/*   Updated: 2023/08/11 23:03:26 by muganiev         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:01:22 by muganiev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-const int	Fixed::_frac = 8;
+const int Fixed::_fract_bits = 8;
 
-Fixed::Fixed(void): _value(0)
+// Constructors
+Fixed::Fixed(): _fp_value(0)
 {
-	std::cout << "Fixed object created with default constructor" << std::endl; 
+	std::cout << "Default Constructor called" << std::endl;
 }
 
-Fixed::~Fixed(void)
+Fixed::Fixed(const Fixed &copy)
 {
-	std::cout << "Fixed object destroyed" << std::endl; 
-}
-
-Fixed::Fixed(Fixed const & copy)
-{
-	std::cout << "Fixed object copied" << std::endl;
+	std::cout << "Copy Constructor called" << std::endl;
 	*this = copy;
 }
 
-Fixed	&Fixed::operator=(const Fixed &copy)
+// Deconstructors
+Fixed::~Fixed()
 {
-	std::cout << "Assignment operator called" << std::endl;
-	this->_value = copy.getRawBits();
-	return (*this);
+	std::cout << "Destructor called" << std::endl;
 }
 
-int	Fixed::getRawBits(void) const
+// Overloaded Operators
+Fixed &Fixed::operator=(const Fixed &src)
 {
-	std::cout << "getRawBits member function called" << std::endl;
-	return (this->_value);
+	std::cout << "Copy assignment operator called" << std::endl;
+	if (this != &src)
+		this->_fp_value = src.getRawBits();
+
+	return *this;
 }
 
-void	Fixed::setRawBits(const int raw)
-{
-	this->_value = raw;
-}
+// Public Methods
+
+// Getter
+	int	Fixed::getRawBits(void)const
+	{
+		std::cout << "getRawBits member function called" << std::endl;
+		return (this->_fp_value);
+	}
+
+// Setter
+	void	Fixed::setRawBits(int const raw)
+	{
+		std::cout << "setRawBits member function called" << std::endl;
+		this->_fp_value = raw;
+	}

@@ -6,35 +6,45 @@
 /*   By: muganiev <muganiev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:59:52 by muganiev          #+#    #+#             */
-/*   Updated: 2023/08/11 23:04:03 by muganiev         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:01:28 by muganiev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FIXED_HPP
+// Header-protection
+#pragma once
 
-# define FIXED_HPP
+// Includes
+#include <iostream>
+#include <cmath>
 
-# include <iostream>
-# include <cmath>
+// classes
 
-class	Fixed
+class Fixed
 {
 	private:
-		int					_value;
-		static const int	_frac;
+		int	_fp_value;
+		static const int _fract_bits;
+
 	public:
-		Fixed(void);
-		Fixed(const int value);
-		Fixed(const float value);
-		~Fixed(void);
-		Fixed(Fixed const &copy);
-		Fixed	&operator=(Fixed const &copy);
-		int		getRawBits(void) const;
-		void	setRawBits(int const raw);
-		float	toFloat(void) const;
-		int		toInt(void) const;
+	// Constructors
+		Fixed();
+		Fixed(const int input);
+		Fixed(const float input);
+		Fixed(const Fixed& copy);
+
+	// Deconstructors
+		~Fixed();
+
+	// Overloaded Operators
+		Fixed &operator=(const Fixed &src);
+
+	// Public Methods
+		float toFloat(void)const;
+		int toInt(void)const;
+	// Getter
+		int getRawBits(void)const;
+	// Setter
+		void setRawBits(int const raw);
 };
 
-std::ostream	&operator<<(std::ostream &str, Fixed const &fixed_nbr);
-
-#endif
+std::ostream    &operator<<(std::ostream &o, Fixed const &fixed);

@@ -6,85 +6,81 @@
 /*   By: muganiev <muganiev@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 22:59:54 by muganiev          #+#    #+#             */
-/*   Updated: 2023/08/11 23:03:53 by muganiev         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:01:30 by muganiev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-static	float ft_pow(float base, int exp)
-{
-	float	result;
+const int Fixed::_fract_bits = 8;
 
-	if (!exp)
-		return (1);
-	if (exp < 0)
-	{
-		base = 1 / base;
-		exp *= -1;
-	}
-	result = base;
-	while (--exp)
-		result *= base;
-	return (result);
+// Constructors
+Fixed::Fixed(): _fp_value(0)
+{
+	std::cout << "Fixed Default Constructor called" << std::endl;
 }
 
-const int	Fixed::_frac = 8;
-
-Fixed::Fixed(void): _value(0)
+Fixed::Fixed(const int input)
 {
-	std::cout << "Fixed object created with default constructor" << std::endl; 
+	std::cout << "Fixed Int Constructor called" << std::endl;
+	this->_fp_value = input << this->_fract_bits;
 }
 
-Fixed::Fixed(const int value): _value(value * ft_pow(2, this->_frac))
-{  
-	std::cout << "Fixed object created with int constructor" << std::endl; 
-} 
-
-Fixed::Fixed(const float value): _value(value * ft_pow(2, this->_frac))
-{  
-	std::cout << "Fixed object created with float constructor" << std::endl; 
-} 
-
-Fixed::~Fixed(void)
+Fixed::Fixed(const float input)
 {
-	std::cout << "Fixed object destroyed" << std::endl;
+	std::cout << "Fixed Float Constructor called" << std::endl;
+	this->_fp_value = roundf(input * (1 << this->_fract_bits));
 }
 
-Fixed::Fixed(Fixed const & copy)
+Fixed::Fixed(const Fixed &copy)
 {
-	std::cout << "Fixed object copied" << std::endl;
+	std::cout << "Fixed Copy Constructor called" << std::endl;
 	*this = copy;
 }
 
-float	Fixed::toFloat(void) const
+// Deconstructors
+Fixed::~Fixed()
 {
-	return (this->_value * ft_pow(2, -this->_frac));
+	std::cout << "Fixed Deconstructor called" << std::endl;
 }
 
-int	Fixed::toInt(void) const
+// Overloaded Operators
+Fixed &Fixed::operator=(const Fixed &src)
 {
-	return (this->_value * ft_pow(2, -this->_frac));
+	std::cout << "Fixed Assignation operator called" << std::endl;
+	if (this != &src)
+		this->_fp_value = src.getRawBits();
+
+	return *this;
 }
 
-Fixed	&Fixed::operator=(Fixed const &copy)
+// Public Methods
+float	Fixed::toFloat(void)const
 {
-	std::cout << "Assignment operator called" << std::endl;
-	this->_value = copy.getRawBits();
-	return (*this);
+	return ((float)this->_fp_value / (float)(1 << this->_fract_bits));
 }
 
-int	Fixed::getRawBits(void) const
+int	Fixed::toInt(void)const
 {
-	return (this->_value);
+	return (this->_fp_value >> this->_fract_bits);
+}
+// Getter
+int	Fixed::getRawBits(void)const
+{
+	// std::cout << "getRawBits member function called" << std::endl;
+	return (this->_fp_value);
 }
 
-void	Fixed::setRawBits(const int raw)
+// Setter
+void	Fixed::setRawBits(int const raw)
 {
-	this->_value = raw;
+	// std::cout << "setRawBits member function called" << std::endl;
+	this->_fp_value = raw;
 }
 
-std::ostream	&operator<<(std::ostream &str, Fixed const &fixed_nbr)
+
+std::ostream	&operator<<(std::ostream &o, Fixed const &fixed)
 {
-	return (str << fixed_nbr.toFloat());
+	o << fixed.toFloat();
+	return (o);
 }
