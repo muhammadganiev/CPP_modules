@@ -1,0 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: muganiev <muganiev@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/01 15:08:48 by muganiev          #+#    #+#             */
+/*   Updated: 2023/09/01 15:20:09 by muganiev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ScavTrap.hpp"
+
+ScavTrap::ScavTrap(void)
+	: ClapTrap()
+{
+	std::cout << "ScavTrap default constructor called" << std::endl;
+	_hp = 100;
+	_energy = 50;
+	_damage = 20;
+}
+
+ScavTrap::ScavTrap(const ScavTrap &old)
+	: ClapTrap(old)
+{
+	std::cout << "ScavTrap copy constructor called" << std::endl;
+	_hp = old._hp;
+	_energy = old._energy;
+	_damage = old._damage;
+	_name = old._name;
+}
+
+ScavTrap::ScavTrap(const std::string &name)
+	: ClapTrap(name)
+{
+	std::cout << "ScavTrap name constructor called" << std::endl;
+	_hp = 100;
+	_energy = 50;
+	_damage = 20;
+}
+
+ScavTrap::~ScavTrap(void)
+{
+	std::cout << "ScavTrap destructor called" << std::endl;
+}
+
+ScavTrap &ScavTrap::operator=(const ScavTrap &rhs)
+{
+	std::cout << "ScavTrap copy assignment constructor called" << std::endl;
+	if (&rhs == this)
+		return (*this);
+	this->_damage = rhs._damage;
+	this->_energy = rhs._energy;
+	this->_hp = rhs._hp;
+	this->_name = rhs._name;
+	return (*this);
+}
+
+void ScavTrap::guardGate(void)
+{
+	std::cout << "ScavTrap " << _name << " is now in gatekeeper mode" << std::endl;
+}
+
+void ScavTrap::attack(const std::string &target)
+{
+	if (_energy > 0)
+	{
+		std::cout << "ScavTrap " << _name << " attacks " << target << " causing " << _damage << " points of damage!" << std::endl;
+		_energy--;
+	}
+}
