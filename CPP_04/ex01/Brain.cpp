@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   Brain.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muganiev <muganiev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:31:48 by muganiev          #+#    #+#             */
-/*   Updated: 2023/07/13 18:40:44 by muganiev         ###   ########.fr       */
+/*   Updated: 2023/09/08 21:13:59 by muganiev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ void Brain::printFiveThoughts(void) const
 }
 
 const std::string Brain::ideaList[] = {
-	"Animals generate 30 times more waste than humans which is 1.4 billion tons every year.",
-	"Ants never sleep. Also they dont have lungs.",
-	"A group of owls is called a parliament.",
-	"A woodpecker can peck 20 times per second.",
-	"Reindeer milk has more fat than cow milk.",
-	"An elephant can smell water up to 3 miles away.",
-	"A whale's heart beats only nine times a minute.",
-	"At birth, a panda is smaller than a mouse and weighs about four ounces.",
-	"Taurophobia is the fear of bulls.",
-	"One million stray dogs and 500,000 stray cats live in New York City metropolitan area.",
-	"Hippo's sweat is pink.",
-	"Flamingos are pink because shrimp is one of their main sources of food.",
-	"Cats can hear ultrasound.",
-	"More than 45 million turkeys are cooked and eaten in the US at Thanksgiving.",
-	"Cat owners are 30% less likely to suffer a heart attack."};
+	"Animals produce 30 times more waste than humans, totaling 1.4 billion tons annually.",
+	"Ants are perpetual wakeful creatures and do not possess lungs."
+	"A gathering of owls is referred to as a parliament."
+	"A woodpecker can strike 20 times per second."
+	"Reindeer milk contains a higher fat content compared to cow milk."
+	"Elephants have the ability to detect water from a distance of up to 3 miles."
+	"A whale's heart maintains a mere nine beats per minute."
+	"When born, a panda is tinier than a mouse, weighing just about four ounces."
+	"Taurophobia represents the dread of bulls."
+	"The New York City metropolitan area is home to over one million stray dogs and 500,000 stray cats."
+	"Hippo perspiration possesses a pink hue."
+	"Flamingos' pink coloration is attributed to their primary diet of shrimp."
+	"Cats have the capacity to hear ultrasound."
+	"In the United States, more than 45 million turkeys are prepared and consumed during Thanksgiving."
+	"Individuals who own cats are 30% less likely to experience a heart attack."};

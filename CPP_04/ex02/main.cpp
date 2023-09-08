@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   megaphone.cpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: muganiev <muganiev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:31:48 by muganiev          #+#    #+#             */
-/*   Updated: 2023/07/13 18:40:44 by muganiev         ###   ########.fr       */
+/*   Updated: 2023/09/08 21:13:43 by muganiev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Animal.hpp"
-#include "Cat.hpp"
 #include "Dog.hpp"
+#include "Cat.hpp"
 
-#include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
 
-int main()
-{
-	const Dog* chris = new Dog();
-	const Cat* jinx = new Cat();
 
-	jinx->makeSound();
-	chris->makeSound();
-	chris->printThoughts();
-	const Dog chris2 = *chris;
-	delete chris;
-	Dog chris3 = chris2;
-	chris2.printThoughts();
-	chris3.printThoughts();
-	jinx->printThoughts();
-	delete jinx;
-	
-	// Animal *animal = new Animal(); This will fail to compile
-	return 0;
+int main( void )
+{
+    const AAnimal* j = new Dog();
+    const AAnimal* i = new Cat();
+
+    delete j;//should not create a leak
+    delete i;
+
+    Dog basic;
+    {
+        Dog tmp = basic;
+    }
+
+    const AAnimal* animals[4] = { new Dog(), new Dog(), new Cat(), new Cat() };
+    for ( int i = 0; i < 4; i++ ) {
+        delete animals[i];
+    }
+
+    return 0;
 }
