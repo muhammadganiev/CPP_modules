@@ -10,3 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef WRONG_CAT
+#define WRONG_CAT
+
+#include "WrongAnimal.hpp"
+
+class WrongCat : public WrongAnimal
+{
+public:
+	WrongCat(void);
+	WrongCat(const WrongCat& old);
+	WrongCat& operator=(const WrongCat& rhs);
+	virtual ~WrongCat(void);
+
+	void makeSound(void) const;
+};
+#endif

@@ -10,3 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Animal.hpp"
+#include "Cat.hpp"
+#include "Dog.hpp"
+
+#include "WrongAnimal.hpp"
+#include "WrongCat.hpp"
+
+int main()
+{
+	const Dog* chris = new Dog();
+	const Cat* jinx = new Cat();
+
+	jinx->makeSound();
+	chris->makeSound();
+	chris->printThoughts();
+	const Dog chris2 = *chris;
+	delete chris;
+	Dog chris3 = chris2;
+	chris2.printThoughts();
+	chris3.printThoughts();
+	jinx->printThoughts();
+	delete jinx;
+	return 0;
+}

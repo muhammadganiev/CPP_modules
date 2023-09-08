@@ -10,3 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CAT
+#define CAT
+
+#include "Animal.hpp"
+
+class Cat : public Animal
+{
+public:
+	Cat(void);
+	Cat(const Cat& old);
+	Cat& operator=(const Cat& rhs);
+	virtual ~Cat(void);
+
+	void makeSound(void) const;
+};
+#endif
