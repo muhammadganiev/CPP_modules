@@ -10,11 +10,11 @@ FLAGS		=	-std=c++98 -Wall -Wextra -Werror
 
 RM			=	rm -rf
 
-DEFAULT		=	"\033[0m"
-RED			=	"\033[0;31m"
 GREEN		=	"\033[1;32m"
 CYAN		=	"\033[3;36m"
 MAGENTA		=	"\033[0;35m"
+DEFAULT		=	"\033[0m"
+RED			=	"\033[0;31m"
 
 %.o : %.cpp
 			@echo $(MAGENTA)

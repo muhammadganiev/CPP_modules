@@ -7,9 +7,6 @@
 #define RED 	"\e[0;31m"
 
 class Bureaucrat{
-    private:
-        std::string const _name;
-        int _grade;
     public:
         class GradeTooHighException: public std::exception
         {
@@ -41,6 +38,9 @@ class Bureaucrat{
 
         void incrementGrade();
         void decrementGrade();
+    private:
+        std::string const _name;
+        int _grade;
 };
 
 std::ostream & operator<<(std::ostream & os, Bureaucrat const & b);
