@@ -1,55 +1,41 @@
 #include "RobotomyRequestForm.hpp"
+#include <ostream>
+#include <cstdlib>
+#include <ctime>
 
-RobotomyRequestForm::RobotomyRequestForm(): AForm("RobotomyRequestForm", 72, 45), _target("default"){
-    std::cout << "RobotomyRequestForm Default Constructor called" << std::endl;
+RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RRF", 72, 45)
+{
+	this->target = target;
 }
 
-RobotomyRequestForm::RobotomyRequestForm(std::string const & target) 
-    : AForm("RobotomyRequestForm", 72, 45), _target(target) {
-    std::cout << "RobotomyRequestForm Constructor called" << std::endl;
+RobotomyRequestForm::~RobotomyRequestForm()
+{
 }
 
-//catch an exception for if NULL is passed to target
-RobotomyRequestForm::RobotomyRequestForm(std::string const * target) 
-    : AForm("RobotomyRequestForm", 72, 45), _target("") {
-    std::cout << "RobotomyRequestForm Null Constructor called" << std::endl;
-    if (target == NULL || target->empty()){
-        throw NullStringException();
-    }
+RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &cref)
+{
+	this->target = cref.target;
+	return (*this);
 }
 
-RobotomyRequestForm::RobotomyRequestForm(RobotomyRequestForm const & other): AForm(other), _target(other._target) {
-         std::cout << "RobotomyRequestForm Copy Constructor called" << std::endl;
+RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &cref) : AForm(cref.getName(), cref.getsignGrade(), cref.getexecGrade())
+{
+	*this = cref;
 }
 
-RobotomyRequestForm & RobotomyRequestForm::operator=(RobotomyRequestForm const & other){
-    std::cout << "RobotomyRequestForm Copy Assignment Constructor called" << std::endl;
-    if (this != &other) {
-		_target = other._target;
-	}
-	return *this;
+void RobotomyRequestForm::execute(const Bureaucrat &executor) const
+{
+	isFormSigned(executor);
+	system("say -Lekha DRILL NOISES");
+	std::srand(std::time(0)); // Seed the random number generator with current time
+	bool flipCoin = std::rand() % 2 == 0;
+	if (flipCoin)
+		std::cout << this->target << " has been robotomized." << std::endl;
+	else
+		std::cout << "Robotomy failed." << std::endl;
 }
 
-RobotomyRequestForm::~RobotomyRequestForm(){
-    std::cout << "RobotomyRequestForm Destructor called" << std::endl;
-}
-
-void RobotomyRequestForm::execute(const Bureaucrat& executor) const{
-    if (getSign() == true && executor.getGrade() <= getExecGrade())
-	{
-		std::cout << YELLOW << "<DRILLING NOISES~~~~~~~~~~~~~~~~~~~~~~>" << DEFAULT << std::endl;
-		std::srand(time(NULL));
-		if (std::rand() % 2 == 0) {
-			std::cout << GREEN << _target << " has been robotomized successfully!" << DEFAULT << std::endl;
-		}
-		else {
-			std::cout << RED << "Robotomy on " << _target << " has failed." << DEFAULT << std::endl;
-		}
-	}
-	else if (executor.getGrade() <= getExecGrade()) {
-		throw GradeTooLowException();
-	}
-	else {
-		throw std::out_of_range(RED "Bureaucrat cannot execute this form" DEFAULT);
-	}
+std::string	RobotomyRequestForm::getTarget(void) const
+{
+	return (this->target);
 }

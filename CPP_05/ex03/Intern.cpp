@@ -1,50 +1,53 @@
-#include "Intern.hpp"
 
-Intern::Intern(){
-    std::cout << "Intern Default Constructor called" << std::endl;
-    this->funcPtr[0] = &Intern::makeShrubberyForm;
-    this->funcPtr[1] = &Intern::makeRobotomyForm;
-    this->funcPtr[2] = &Intern::makePresidentialForm;
+# include "Intern.hpp"
+
+Intern::Intern()
+{
+	std::cout << "[Intern] constructor called.\n";
 }
 
-Intern::Intern(const Intern & other){
-    std::cout << "Intern Copy Constructor called" << std::endl;
-    *this = other;
+Intern::~Intern()
+{
+	std::cout << "[Intern] constructor called.\n";
 }
 
-Intern & Intern::operator=(const Intern & other){
-    std::cout << "AForm Copy Assignment Constructor called" << std::endl;
-    (void)other;
-    return (*this);
+Intern::Intern(const Intern &cref)
+{
+	*this = cref;
 }
 
-Intern::~Intern(){
-    std::cout << "Intern Destructor called" << std::endl;
+Intern &Intern::operator=(const Intern &cref)
+{
+	(void)cref;
+	return(*this);
 }
 
-AForm * Intern::makeShrubberyForm(std::string target) {
-    return new ShrubberyCreationForm(target);
-}
+AForm	*Intern::makeForm(std::string name, const std::string target)
+{
+	std::string forms[] = {"presidential pardon", "robotomy request", "shrubbery creation"};
+	AForm	*form = NULL;
 
-AForm * Intern::makeRobotomyForm(std::string target) {
-    return new RobotomyRequestForm(target);
-}
-
-AForm * Intern::makePresidentialForm(std::string target) {
-    return new PresidentialPardonForm(target);
-}
-
-AForm * Intern::makeForm(std::string const & formName, std::string const & formTarget){
-    std::string forms[3] = { "Shrubbery Creation",
-                             "Robotomy Request",
-                             "Presidential Pardon"};
-    
-    for(int i = 0; i < 3; i++) {
-        if (forms[i] == formName){
-            std::cout << GREEN << "Intern creates " << formName << DEFAULT << std::endl;
-            return ((this->*funcPtr[i])(formTarget));
-        }
-    }
-    std::cout << RED << "This Form is Non-Existent" << DEFAULT << std::endl;
-    return (0);
+	for (int i = 0; i < 3; i++)
+	{
+	if (name == forms[i])
+	{
+		switch(i)
+		{
+			case 0:
+				form = new PresidentialPardonForm(target);
+				break;
+			case 1:
+				form = new RobotomyRequestForm(target);
+				break;
+			case 2:
+				form = new ShrubberyCreationForm(target);
+				break;
+		}
+	}
+	}
+	if (form == NULL)
+		std::cout << "[Intern] " << name << "Form doesnt exist" << std::endl;
+	else
+		std::cout << "Intern created " << name << std::endl;
+	return (form);
 }

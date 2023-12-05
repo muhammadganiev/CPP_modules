@@ -1,84 +1,96 @@
+
 #include "AForm.hpp"
+#include <fstream>
 
-AForm::AForm():_name("default"), _sign(false), _signGrade(150), _execGrade(150){
-    std::cout << "AForm Default Constructor called" << std::endl;
-}
-
-AForm::AForm(std::string const & name, int const signGrade, int const execGrade)
-        : _name(name), _sign(false), _signGrade(signGrade), _execGrade(execGrade) {
-    std::cout << "AForm Constructor called" << std::endl;
-    if (signGrade > 150 || execGrade > 150){
-        throw(GradeTooLowException());
-    }
-    else if (signGrade < 1 || execGrade < 1){
-        throw(GradeTooHighException());
-    }
-}
-
-//catch an exception for if NULL is passed to name
-AForm::AForm(std::string const * name, int const signGrade, int const execGrade) 
-        : _name(""), _sign(false), _signGrade(signGrade), _execGrade(execGrade) {
-    std::cout << "AForm Null Constructor called" << std::endl;
-    if (name == NULL || name->empty()){
-        throw NullStringException();
-    }
-    (void)signGrade;
-    (void)execGrade;
-}
-
-AForm::AForm(AForm const & other)
-    : _name(other._name), _sign(other._sign), _signGrade(other._signGrade), _execGrade(other._execGrade){
-        std::cout << "AForm Copy Constructor called" << std::endl;
-    }
-
-AForm & AForm::operator=(AForm const & other){
-    std::cout << "AForm Copy Assignment Constructor called" << std::endl;
-    if (this != &other) {
-		const_cast<std::string&>(_name) = other._name;
-		_sign = other._sign;
-        const_cast<int&>(_signGrade) = other._signGrade;
-        const_cast<int&>(_execGrade) = other._execGrade;
-	}
-	return *this;
-}
-
-AForm::~AForm(){
-    std::cout << "AForm Destructor called" << std::endl;
-}
-
-std::string const & AForm::getName()const{ return _name; }
-
-int AForm::getSignGrade()const{ return _signGrade; }
-
-bool AForm::getSign()const{ return _sign; }
-
-int AForm::getExecGrade()const { return _execGrade; }
-
-const char * AForm::GradeTooHighException::what() const throw(){
-     return RED "Grade is too high" DEFAULT;
-}
-
-const char * AForm::GradeTooLowException::what() const throw(){
-    return RED "Grade is too low" DEFAULT;
-}
-
-const char * AForm::NullStringException::what() const throw(){
-    return RED "A Null string was passed" DEFAULT;
-}
-
-std::ostream& operator<<(std::ostream& os, const AForm& form)
+AForm::AForm(std::string name, int signGrade, int execGrade) : name(name), signGrade(signGrade), execGrade(execGrade)
 {
-    os << GREEN << "AForm: " << form.getName() << std::boolalpha << ", signed: " << form.getSign() << ", grade required to sign: "
-        << form.getSignGrade() << ", grade required to execute: " << form.getExecGrade() << DEFAULT;
-    return (os);
+	this->isSigned = false;
+	if (this->signGrade < 1 || this->execGrade < 1)
+		throw GradeTooHighException();
+	if (this->signGrade > 150 || this->execGrade > 150)
+		throw GradeTooLowException();
+	std::cout << "[AForm] constructor called.\n";
 }
 
-void AForm::beSigned(Bureaucrat const & bureaucrat){
-    if (bureaucrat.getGrade() <= _signGrade){
-        _sign = true;
-    }
-    else {
-        throw GradeTooLowException();
-    }
+
+AForm::AForm(const AForm &cref) : name(cref.getName()), signGrade(cref.getsignGrade()), execGrade(cref.getexecGrade())
+{
+	*this = cref;
 }
 
+AForm &AForm::operator=(const AForm &cref)
+{
+	this->isSigned = cref.isSigned;
+	return (*this);
+}
+
+AForm::~AForm()
+{
+	std::cout << "[AForm] destructor called.\n";
+}
+
+const char *AForm::GradeTooHighException::what() const throw()
+{
+	return ("[AForm]: highest grade cannot be less than 1.");
+}
+
+const char *AForm::GradeTooLowException::what() const throw()
+{
+	return("[AForm]: lowest grade cannot be more than 150.");
+}
+
+const char *AForm::NotSigned::what() const throw()
+{
+	return ("[AForm] is not signed.");
+}
+
+std::string AForm::getName(void) const
+{
+	return(this->name);
+}
+
+int	AForm::getsignGrade(void) const
+{
+	return (this->signGrade);
+}
+
+int	AForm::getexecGrade(void) const
+{
+	return(this->execGrade);
+}
+
+void	AForm::beSigned(const Bureaucrat &cref)
+{
+	if (cref.getGrade() <= this->getsignGrade())
+		this->isSigned = true;
+	else
+		throw GradeTooLowException();
+}
+
+bool	AForm::signStatus(void) const
+{
+	return (this->isSigned);
+}
+
+void	AForm::isFormSigned(const Bureaucrat &cref) const
+{
+	if (this->isSigned)
+	{
+		if (this->getexecGrade() < cref.getGrade())
+			throw GradeTooLowException();
+	}
+	else
+		throw NotSigned();
+}
+
+std::ostream& operator<<(std::ostream& out, const AForm &cref)
+{
+	out << "---------------------------------------" << std::endl;
+	out << "[AForm Information]" << std::endl;
+	out << "name: " << cref.getName() << std::endl;
+	out << "sign status: " << cref.signStatus() << std::endl;
+	out << "sign grade: " << cref.getsignGrade() << std::endl;
+	out << "exec grade: " << cref.getexecGrade() << std::endl;
+	out << "---------------------------------------" << std::endl;
+	return (out);
+}

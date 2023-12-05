@@ -1,34 +1,37 @@
+
 #ifndef SHRUBBERYCREATIONFORM_HPP
-#define SHRUBBERYCREATIONFORM_HPP
+# define SHRUBBERYCREATIONFORM_HPP
 
-#include <iostream>
-#include <fstream>
-#include "AForm.hpp"
+# include "AForm.hpp"
+# include "Bureaucrat.hpp"
 
-#define TREE        "\033[1;32m       ,@@@@@@@,\
-\n                  ,,,.   ,@@@@@@/@@,  .oo8888o.\
-\n               ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/8o\
-\n              ,%&\\%&&%&&%,@@@\\@@@/@@@88\\88888/88'\
-\n              %&&%&%&/%&&%@@\\@@/ /@@@88888\\88888'\
-\n              %&&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'\
-\n              `&%\\ ` /%&'    |.|        \\ '|8'\
-\n                  |o|        | |         | |\
-\n                  |.|        | |         | |\
-\n               \\/ ._\\//_/__/  ,\\_//__\\/.  \\_//__/_\033[0m\n"
+#define TREE   \
+"     ccee88oo\n\
+  C8O8O8Q8PoOb o8oo\n\
+ dOB69QO8PdUOpugoO9bD\n\
+CgggbU8OU qOp qOdoUOdcb\n\
+    6OuU  pf u gcoUodpP\n\
+      dfserw  /douUP\n\
+        dfsf///\n\
+         |||||\n\
+         |||||\n\
+         |||||\n\
+   ......|||||...."
 
-
-class ShrubberyCreationForm: public AForm {
-    private:
-        std::string _target;
-    public: 
-        ShrubberyCreationForm();
-        ShrubberyCreationForm(ShrubberyCreationForm const & other);
-        ShrubberyCreationForm(std::string const & target);
-        ShrubberyCreationForm(std::string const * target);
-        ShrubberyCreationForm & operator=(ShrubberyCreationForm const & other);
-        ~ShrubberyCreationForm();
-
-        void execute(const Bureaucrat& executor) const;
+class ShrubberyCreationForm : public AForm
+{
+	private:
+		std::string	target;
+	public:
+		ShrubberyCreationForm(std::string target);
+		ShrubberyCreationForm &operator=(const ShrubberyCreationForm &cref);
+		ShrubberyCreationForm(const ShrubberyCreationForm &cref);
+		~ShrubberyCreationForm();
+		void	execute(const Bureaucrat &executor) const;
+		class FileException: public std::exception
+		{
+			const char *what() const throw();
+		};
 };
 
-#endif
+# endif

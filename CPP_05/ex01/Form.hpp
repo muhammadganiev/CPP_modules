@@ -1,49 +1,43 @@
+
+
 #ifndef FORM_HPP
-#define FORM_HPP
+# define FORM_HPP
 
-#include <iostream>
-class Bureaucrat;
-
-class Form{
-    private:
-        std::string const _name;
-        bool _sign;
-        int const _signGrade;
-        int const _execGrade;
-    public: 
-    
-        class GradeTooHighException: public std::exception
-        {
-            public:  
-                virtual const char * what() const throw();
-        };
-        class GradeTooLowException: public std::exception
-        {
-            public:  
-                virtual const char * what() const throw();
-        };
-        class NullStringException: public std::exception
-        {
-            public:  
-                virtual const char * what() const throw();
-        };
-
-        Form();
-        Form(Form const & other);
-        Form & operator=(Form const & other);
-        Form(std::string const & name, int const signGrade, int const execGrade);
-        Form(std::string const * name, int const signGrade, int const execGrade);
-        ~Form();
-
-        std::string const & getName()const;
-        bool getSign()const;
-        int getSignGrade()const;
-        int getExecGrade()const;
-
-        void beSigned(Bureaucrat const & bureaucrat);
-};
-
-std::ostream& operator<<(std::ostream& os, const Form& form);
 #include "Bureaucrat.hpp"
 
-#endif
+class Bureaucrat;
+
+class Form
+{
+	private:
+		const std::string	name;
+		bool				isSigned;
+		const int			signGrade;
+		const int			execGrade;
+
+	public:
+		Form(std::string name, int signGrade, int execGrade);
+		Form(const Form &cref);
+		Form &operator=(const Form &cref);
+		~Form();
+
+		class GradeTooHighException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+		class GradeTooLowException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+		std::string	getName(void) const;
+		int			getsignGrade(void) const;
+		int			getexecGrade(void) const;
+		bool		signStatus(void) const;
+		void		beSigned(const Bureaucrat &cref);
+};
+
+std::ostream& operator<<(std::ostream& out, const Form &cref);
+
+# endif

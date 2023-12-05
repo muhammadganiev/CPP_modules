@@ -1,38 +1,23 @@
-NAME		=	form
+CXX = g++
+NAME = Bureaucrat
+FILES = main.cpp Bureaucrat.cpp Form.cpp
+OBJ = $(FILES:.cpp=.o)
+FLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS		=	main.cpp Bureaucrat.cpp Form.cpp
+all: $(NAME)
 
-OBJS		=	$(SRCS:%.cpp=%.o)
+$(NAME): $(OBJ)
+	$(CXX) $(FLAGS) $(OBJ) -o $(NAME)
 
-CC			=	c++
-
-FLAGS		=	-std=c++98 -Wall -Wextra -Werror
-
-RM			=	rm -rf
-
-DEFAULT		=	"\033[0m"
-RED			=	"\033[0;31m"
-GREEN		=	"\033[1;32m"
-CYAN		=	"\033[3;36m"
-MAGENTA		=	"\033[0;35m"
-
-%.o : %.cpp
-			@echo $(MAGENTA)
-			$(CC) $(FLAGS) -c $< -o $@
-
-all:		$(NAME)
-
-$(NAME):	$(OBJS)
-			@$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+%.o: %.cpp
+	$(CXX) $(FLAGS) -c $< -o $@
 
 clean:
-			@$(RM) $(OBJS)
-			@echo $(RED)"Deleted CPP 05 object files"$(DEFAULT)
+	rm -rf $(OBJ)
 
-fclean:		clean
-			@$(RM) $(NAME)
-			@echo $(RED)"Deleted CPP 05 executable"$(DEFAULT)
+fclean: clean
+	rm -rf $(NAME)
 
-re:			fclean all
+re: fclean all
 
-.PHONY:		all clean fclean re
+.PHONY: all clean fclean re

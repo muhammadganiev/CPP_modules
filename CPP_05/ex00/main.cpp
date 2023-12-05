@@ -1,15 +1,52 @@
+
 #include "Bureaucrat.hpp"
 
-int main(void)
+int main()
 {
 	try
 	{
-		Bureaucrat b = Bureaucrat("smk", 150);
-		std::cout << b;
-		Bureaucrat d = Bureaucrat("muha", -1);
+		Bureaucrat A("Helen", 0);
 	}
-	catch (std::exception &e)
+	catch(const std::exception& e)
 	{
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		Bureaucrat B("Bilal", 151);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		Bureaucrat C("Cobra", 50);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		Bureaucrat D("Kai", 120);
+		std::cout << D;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		Bureaucrat E("Karl", 1);
+		for(;;)
+		{
+			std::cout << E << std::endl;
+			E.decGrade();
+		}
+	}
+	catch(const std::exception &e)
+	{
+		std::cerr << e.what() << '\n';
 	}
 }

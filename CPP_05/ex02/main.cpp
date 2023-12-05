@@ -1,93 +1,59 @@
+
+
 #include "Bureaucrat.hpp"
-#include "AForm.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main()
 {
-    try
-    {
-        std::cout << YELLOW << "SHRUBBERY SIGN & EXEC TEST POSITIVE" << DEFAULT << std::endl;
-        Bureaucrat b = Bureaucrat("Muha", 137);
-        ShrubberyCreationForm shrub("Shrub");
-        b.signAForm(shrub);
-        b.executeForm(shrub);
-        std::cout << b << std::endl;
-        std::cout << shrub << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-    try
-    {
-        std::cout << YELLOW << "SHRUBBERY EXEC TEST NEGATIVE" << DEFAULT << std::endl;
-        Bureaucrat b = Bureaucrat("Muha", 138);
-        ShrubberyCreationForm shrub("Shrub");
-        b.signAForm(shrub);
-        b.executeForm(shrub);
-        std::cout << b << std::endl;
-        std::cout << shrub << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-    try
-    {
-        std::cout << YELLOW << "SHRUBBERY SIGN TEST NEGATIVE" << DEFAULT << std::endl;
-        Bureaucrat b = Bureaucrat("Muha", 146);
-        ShrubberyCreationForm shrub("Shrub");
-        b.signAForm(shrub);
-        b.executeForm(shrub);
-        std::cout << b << std::endl;
-        std::cout << shrub << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-    try
-    {
-        std::cout << YELLOW << "ROBOTOMY SIGN TEST NEGATIVE" << DEFAULT << std::endl;
-        Bureaucrat b = Bureaucrat("Muha", 146);
-        RobotomyRequestForm robot("Robot");
-        b.signAForm(robot);
-        b.executeForm(robot);
-        std::cout << b << std::endl;
-        std::cout << robot << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-    try
-    {
-        std::cout << YELLOW << "ROBOTOMY SIGN TEST POSITIVE" << DEFAULT << std::endl;
-        Bureaucrat b = Bureaucrat("Muha", 41);
-        RobotomyRequestForm robot("Robot");
-        b.signAForm(robot);
-        b.executeForm(robot);
-        std::cout << b << std::endl;
-        std::cout << robot << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
-    try
-    {
-        std::cout << YELLOW << "PRESIDENTIAL PARDON SIGN TEST POSITIVE" << DEFAULT << std::endl;
-        Bureaucrat b = Bureaucrat("Muha", 4);
-        PresidentialPardonForm pardon("Class A");
-        b.signAForm(pardon);
-        b.executeForm(pardon);
-        std::cout << b << std::endl;
-        std::cout << pardon << std::endl;
-    }
-    catch (const std::exception& e) 
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
+	try
+	{
+		AForm *SCF = new ShrubberyCreationForm("home");
+		Bureaucrat b1("Bob", 1);
+		Bureaucrat b2("Jhon", 1);
+		b2.signForm(*SCF);
+		b1.execForm(*SCF);
+
+		b2.execForm(*SCF);
+		delete SCF;
+	}
+
+	catch (std::exception & e) {
+		std::cout << "Exception: " << e.what() << std::endl;
+	}
+
+	// try
+	// {
+	// 	AForm *SCF = new RobotomyRequestForm("home");
+	// 	Bureaucrat b1("Bob2", 44);
+	// 	Bureaucrat b2("Jhon2", 72);
+	// 	b2.signForm(*SCF);
+	// 	b1.execForm(*SCF);
+
+	// 	b2.execForm(*SCF);
+	// 	delete SCF;
+	// }
+
+	// catch (std::exception & e)
+	// {
+	// 	std::cout << "Exception: " << e.what() << std::endl;
+	// }
+
+	// try
+	// {
+	// 	AForm *SCF = new ShrubberyCreationForm("home");
+	// 	Bureaucrat b1("Bob2", 5);
+	// 	Bureaucrat b2("Jhon2", 24);
+	// 	b2.signForm(*SCF);
+	// 	b1.execForm(*SCF);
+
+	// 	b2.execForm(*SCF);
+	// 	delete SCF;
+	// }
+
+	// catch (std::exception & e)
+	// {
+	// 	std::cout << "Exception: " << e.what() << std::endl;
+	// }
 }

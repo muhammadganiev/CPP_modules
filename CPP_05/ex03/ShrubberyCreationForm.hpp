@@ -1,9 +1,20 @@
-#ifndef SHRUBBERYCREATIONFORM_HPP
-#define SHRUBBERYCREATIONFORM_HPP
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: muganiev <muganiev@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/12 17:09:49 by bsaeed            #+#    #+#             */
+/*   Updated: 2023/12/05 21:49:03 by muganiev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <iostream>
-#include <fstream>
-#include "AForm.hpp"
+#ifndef SHRUBBERYCREATIONFORM_HPP
+# define SHRUBBERYCREATIONFORM_HPP
+
+# include "AForm.hpp"
+# include "Bureaucrat.hpp"
 
 #define TREE        "\033[1;32m       ,@@@@@@@,\
 \n                  ,,,.   ,@@@@@@/@@,  .oo8888o.\
@@ -16,19 +27,21 @@
 \n                  |.|        | |         | |\
 \n               \\/ ._\\//_/__/  ,\\_//__\\/.  \\_//__/_\033[0m\n"
 
-
-class ShrubberyCreationForm: public AForm {
-    private:
-        std::string _target;
-    public: 
-        ShrubberyCreationForm();
-        ShrubberyCreationForm(ShrubberyCreationForm const & other);
-        ShrubberyCreationForm(std::string const & target);
-        ShrubberyCreationForm(std::string const * target);
-        ShrubberyCreationForm & operator=(ShrubberyCreationForm const & other);
-        ~ShrubberyCreationForm();
-
-        void execute(const Bureaucrat& executor) const;
+class ShrubberyCreationForm : public AForm
+{
+	private:
+		std::string	target;
+	public:
+		ShrubberyCreationForm(std::string target);
+		ShrubberyCreationForm &operator=(const ShrubberyCreationForm &cref);
+		ShrubberyCreationForm(const ShrubberyCreationForm &cref);
+		~ShrubberyCreationForm();
+		void	execute(const Bureaucrat &executor) const;
+		class FileException: public std::exception
+		{
+			const char *what() const throw();
+		};
+		std::string	getTarget(void) const;
 };
 
-#endif
+# endif
