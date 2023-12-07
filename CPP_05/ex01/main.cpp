@@ -44,7 +44,7 @@ int main()
 		Form form("Faraz", 49, 12);
 		form.beSigned(bureaucrat);
 		bureaucrat.signForm(form);
-		std::cout << form << std::en33dl;
+		std::cout << form << std::endl;
 	}
 	catch(const std::exception& e)
 	{
