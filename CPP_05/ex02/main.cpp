@@ -1,5 +1,3 @@
-
-
 #include "Bureaucrat.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
@@ -7,53 +5,37 @@
 
 int main()
 {
-	try
 	{
-		AForm *SCF = new ShrubberyCreationForm("home");
-		Bureaucrat b1("Bob", 1);
-		Bureaucrat b2("Jhon", 1);
-		b2.signForm(*SCF);
-		b1.execForm(*SCF);
-
-		b2.execForm(*SCF);
-		delete SCF;
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		Bureaucrat B("john", 4);
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		ShrubberyCreationForm A("target");
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		B.signForm(A);
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		B.execForm(A);
+		std::cout << "-----------------------------------------------------------------------------\n" << std::endl;
 	}
-
-	catch (std::exception & e) {
-		std::cout << "Exception: " << e.what() << std::endl;
+	{
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		Bureaucrat B("john", 19);
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		RobotomyRequestForm A("target");
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		B.signForm(A);
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		B.execForm(A);
+		std::cout << "-----------------------------------------------------------------------------\n" << std::endl;
 	}
-
-	// try
-	// {
-	// 	AForm *SCF = new RobotomyRequestForm("home");
-	// 	Bureaucrat b1("Bob2", 44);
-	// 	Bureaucrat b2("Jhon2", 72);
-	// 	b2.signForm(*SCF);
-	// 	b1.execForm(*SCF);
-
-	// 	b2.execForm(*SCF);
-	// 	delete SCF;
-	// }
-
-	// catch (std::exception & e)
-	// {
-	// 	std::cout << "Exception: " << e.what() << std::endl;
-	// }
-
-	// try
-	// {
-	// 	AForm *SCF = new ShrubberyCreationForm("home");
-	// 	Bureaucrat b1("Bob2", 5);
-	// 	Bureaucrat b2("Jhon2", 24);
-	// 	b2.signForm(*SCF);
-	// 	b1.execForm(*SCF);
-
-	// 	b2.execForm(*SCF);
-	// 	delete SCF;
-	// }
-
-	// catch (std::exception & e)
-	// {
-	// 	std::cout << "Exception: " << e.what() << std::endl;
-	// }
+	{
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		Bureaucrat B("john",3);
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		PresidentialPardonForm A("target");
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		B.signForm(A);
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+		B.execForm(A);
+		std::cout << "-----------------------------------------------------------------------------" << std::endl;
+	}
 }

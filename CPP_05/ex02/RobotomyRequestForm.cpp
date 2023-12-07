@@ -26,7 +26,7 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &cref) : AFor
 void RobotomyRequestForm::execute(const Bureaucrat &executor) const
 {
 	isFormSigned(executor);
-	system("say -v Luca DRILL NOISES");
+	std::cout << "Drr....... Drr......." << std::endl;
 	std::srand(std::time(0)); // Seed the random number generator with current time
 	bool flipCoin = std::rand() % 2 == 0;
 	if (flipCoin)

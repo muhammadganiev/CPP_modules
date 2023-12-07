@@ -8,7 +8,7 @@ Intern::Intern()
 
 Intern::~Intern()
 {
-	std::cout << "[Intern] constructor called.\n";
+	std::cout << "[Intern] destructor called.\n";
 }
 
 Intern::Intern(const Intern &cref)
