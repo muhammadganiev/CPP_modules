@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mkhan <mkhan@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 15:12:14 by mkhan             #+#    #+#             */
-/*   Updated: 2023/02/08 19:47:46 by mkhan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Span.hpp"
 
 int main()
@@ -31,7 +19,7 @@ int main()
 	}
 	try
 	{
-		sp.addMoreNum(100);
+		sp.addMoreNum(10000);
 		std::cout << "shortest span : " << sp.shortestSpan() << std::endl;
 		std::cout << "longest span  : " << sp.longestSpan() << std::endl;
 	}

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mkhan <mkhan@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/06 14:58:47 by mkhan             #+#    #+#             */
-/*   Updated: 2023/02/06 15:10:08 by mkhan            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 # include "easyfind.hpp"
 
 int main()
@@ -23,7 +11,7 @@ int main()
 	try
 	{
 		std::cout << easyfind(v, 5) << std::endl;
-		std::cout << easyfind(v, 11) << std::endl;
+		std::cout << easyfind(v, 4) << std::endl;
 	}
 	catch (std::exception &e)
 	{
