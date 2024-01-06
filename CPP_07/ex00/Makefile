@@ -1,4 +1,3 @@
-
 SRC =	main.cpp
 
 OBJ =	$(SRC:.cpp=.o)
