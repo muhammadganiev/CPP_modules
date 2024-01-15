@@ -1,37 +1,23 @@
-#ifndef BITCOINEXCHANGE_HPP
-#define BITCOINEXCHANGE_HPP
+#pragma once
 
 #include <iostream>
-#include <sstream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <map>
-#include <stdlib.h>
-#include <iomanip>
+#include <ctime>
+#include <cstring>
 
-class BitcoinExchange
+typedef struct	s_input
 {
-    private:
-		std::map<std::string, float> _rates;
+	std::string date;
+	float value;
+} t_input;
 
-		void	parseDates(std::string line);
-		void	getDateAndPrint(std::string date, float val);
-
-		bool	readDataFile();
-		bool	calculate(std::string infile);
-		bool	isValidDate(std::string	date);
-		bool	isValidDelim(std::string	line);
-		bool	isValidDMY(std::string year, std::string month, std::string day);
-		float	isValidValue(std::string	val);
-
-		std::string	lowerBound(std::string date);
-
-    public:
-        BitcoinExchange();
-        BitcoinExchange(std::string	infile);
-        BitcoinExchange(const BitcoinExchange &object);
-        BitcoinExchange &operator=(const BitcoinExchange &rhs);
-        ~BitcoinExchange();
+class FailToOpenFileException : public std::exception
+{
+	public:
+		virtual const char* what() const throw();
 };
 
-#endif
+void bitcoinExchanger(std::fstream& inputFile);

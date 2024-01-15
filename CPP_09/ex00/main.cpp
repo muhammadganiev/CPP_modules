@@ -1,17 +1,21 @@
 #include "BitcoinExchange.hpp"
 
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	if (argc == 2)
+	(void)ac;
+	std::fstream inputFile(av[1], std::ios::in);
+	if (inputFile.fail())
 	{
-		BitcoinExchange exchgRate(argv[1]);
-		return (0);
+		std::cout << "Error: Failed to open input file\n";
+		return 1;
 	}
-	else
+	try
 	{
-		std::cout << "Invalid Arguments" << std::endl;
-		std::cout << "Usage: ./btc <file>" << std::endl;
-		return (1);
+		bitcoinExchanger(inputFile);
 	}
-	return (0);
+	catch (std::exception &ex)
+	{
+		std::cout << ex.what() << std::endl;
+	}
+	return 0;
 }

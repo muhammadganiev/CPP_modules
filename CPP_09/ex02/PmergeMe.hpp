@@ -1,38 +1,20 @@
-#ifndef PMERGEME_HPP
-#define PMERGEME_HPP
+#pragma once
 
 #include <iostream>
-#include <stdlib.h>
-#include <vector>
 #include <deque>
-#include <time.h>
+#include <list>
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
+
+
 
 class PmergeMe
 {
-    private:
-		int					_k;
-		std::vector<int>	_vec;
-		std::deque<int>		_deque;
-
-        void    fillAndPrint(char **argv);
-		void	sortContainers();
-
-		void	vecSort(int begin, int end);
-		void	mergeVec(int begin, int mid, int end);
-		void	vecInsertion(int begin, int end);
-		void	printVec();
-
-		void	dequeSort(int begin, int end);
-		void	mergeDeque(int begin, int mid, int end);
-		void	dequeInsertion(int begin, int end);
-
-        
-    public:
-        PmergeMe();
-        PmergeMe(char **argv);
-        PmergeMe(const PmergeMe &object);
-        PmergeMe &operator=(const PmergeMe &rhs);
-        ~PmergeMe();
+	public:
+	PmergeMe(int ac, char **av);
+	template <typename T>
+	void display(const T& container);
+	void mergeInsertSortDeque(std::deque<int>& arr);
+	void mergeInsertSortList(std::list<int>& arr);
 };
-
-#endif

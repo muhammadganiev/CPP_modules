@@ -1,35 +1,13 @@
 #include "PmergeMe.hpp"
 
-bool	is_digit(char **argv)
+int main(int ac, char* av[])
 {
-	int i = 1;
-
-	while (argv[i])
-	{
-		int j = 0;
-		while (argv[i][j])
-		{
-			if (isdigit(argv[i][j]) == 0)
-				return (false);
-			j++;
-		}
-		i++;
-	}
-	return(true);
-}
-
-int main(int argc, char **argv)
-{
-    if ((argc > 3 && argc < 3001) && is_digit(argv))
+	if (ac <= 1)
     {
-		PmergeMe sort(argv);
-		return (0);
+        std::cerr << "Error: No input sequence provided." << std::endl;
+        return 1;
     }
-    else
-    {
-        std::cout << "Error Invalid Arguments." << std::endl;
-        std::cout << "Usage: ./PmergeMe 3 5 9 7 4 ..." << std::endl;
-		return (1);
-    }
-    return (0);
+	PmergeMe pmergeMe(ac, av);
+	(void)pmergeMe;
+    return 0;
 }

@@ -1,212 +1,128 @@
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange()
+const char* FailToOpenFileException::what(void) const throw()
 {
+	return "Error: Failed to open database file";
 }
 
-BitcoinExchange::BitcoinExchange(std::string infile)
+const std::map<std::string, float> fileToMap(void)
 {
-	if (!this->readDataFile())
-		return ;
-	if (!this->calculate(infile))
-		return ;
+	std::fstream dbFile("data.csv", std::ios::in);
+	std::string line;
+	std::stringstream conv;
+	std::map<std::string, float> database;
+	std::string date;
+	float rate;
+
+	if (dbFile.fail())
+		throw FailToOpenFileException();
+	std::getline(dbFile, line);
+	for (;std::getline(dbFile, line);)
+	{
+		date = line.substr(0, line.find(','));
+		conv << line.substr(line.find(',') + 1);
+		conv >> rate;
+		database[date] = rate;
+		conv.clear();
+	}
+	return database;
 }
 
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &object)
+bool checkLine(std::string line, t_input *input)
 {
-    *this = object;
-}
+	std::istringstream is(line);
+	std::string date;
+	char delimiter;
+	float value;
 
-BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &rhs)
-{
-    if (this != &rhs)
-    {
-    }
-    return (*this);
-}
-
-BitcoinExchange::~BitcoinExchange()
-{
-}
-
-bool	BitcoinExchange::readDataFile()
-{
-	std::ifstream	data("data.csv");
-	std::string		line;
-
-	if (data.fail())
+	if (is >> date >> delimiter >> value)
 	{
-		std::cout << "Error: Cannot Open Data File" << std::endl;
-		data.close();
-		return (false);
-	}
-	getline(data, line);
-	while (!(data.eof()))
-	{
-		getline(data, line);
-
-		std::stringstream	str(line);
-		std::string			date, rate;
-		getline(str, date, ',');
-		getline(str, rate);
-		this->_rates[date] = atof(rate.c_str());
-	}
-	data.close();
-	return (true);
-}
-
-bool	BitcoinExchange::isValidDMY(std::string year, std::string month, std::string day)
-{
-	int	y = atoi(year.c_str());  
-	int	m = atoi(month.c_str());
-	int	d = atoi(day.c_str());
-
-	if (y < 2009 || y > 2022)
-		return (false);
-	if (m < 1 || m > 12)
-		return (false);
-	if (d < 1 || d > 31)
-		return (false);
-	if ((m == 2 && d > 28) && (y != 2012 && y != 2016 && y != 2020))
-		return (false);
-	if ((m == 2 && d > 29) && (y == 2012 || y == 2016 || y == 2020))
-		return (false);
-	return (true);
-}
-
-bool	BitcoinExchange::isValidDate(std::string date)
-{
-	std::stringstream	str(date);
-	std::string			year, month, day;
-
-	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
-	{
-		std::cout << "Error: bad input => " << date << std::endl;
-		return (false);
-	}
-	getline(str, year, '-');
-	getline(str, month, '-');
-	getline(str, day);
-	if (!this->isValidDMY(year, month, day))
-	{
-		std::cout << "Error: bad input => " << date << std::endl;
-		return (false);
-	}
-	return (true);
-}
-
-bool	BitcoinExchange::isValidDelim(std::string date)
-{
-	if (date.find(" | ") != 10)
-	{
-		std::cout << "Error: Invalid Delimiter" << std::endl;
-		return (false);
-	}
-	return (true);
-}
-
-float		BitcoinExchange::isValidValue(std::string value)
-{
-	float	val = atof(value.c_str());
-	if (value.find("-") == 0)
-	{
-		std::cout << "Error: not a positive number." << std::endl;
-		return (-1);
-	}
-	if (value.size() > 4 || val > 1000)
-	{
-		std::cout << "Error: too large a number." << std::endl;
-		return (-1);
-	}
-	return (val);
-}
-
-std::string	BitcoinExchange::lowerBound(std::string date)
-{
-	std::stringstream	str(date);
-	std::string			year, month, day, newDate;
-
-	getline(str, year, '-');
-	getline(str, month, '-');
-	getline(str, day);
-	int	y = atoi(year.c_str());  
-	int	m = atoi(month.c_str());
-	int	d = atoi(day.c_str());
-	if (d > 1)
-		d--;
-	else if (m > 1)
-	{
-		d = 31;
-		m--;
-	}
-	else if (y > 2008)
-	{
-		d = 31;
-		m = 12;
-		y--;
-	}
-	std::stringstream nwDate;
-	nwDate << y << '-' << std::setw(2) << std::setfill('0') << m << '-' << std::setw(2) << std::setfill('0') << d;
-	newDate = nwDate.str();
-	return (newDate);
-}
-
-void	BitcoinExchange::getDateAndPrint(std::string date, float val)
-{
-	if (this->_rates.find(date) != this->_rates.end())
-	{
-		float result = val * this->_rates[date];
-		std::cout << date << " => " << std::fixed << std::setprecision(2) << val;
-		std::cout << " = " << result << std::endl;
-		return ;
-	}
-	else if (this->isValidDate(date))
-	{
-		date = this->lowerBound(date);
-		this->getDateAndPrint(date, val);
-	}
-}
-
-void	BitcoinExchange::parseDates(std::string line)
-{
-	std::stringstream	str(line);
-	std::string			date, delim, value;
-	float				val;
-
-	str >> date >> delim >> value;
-
-	val = this->isValidValue(value);
-	if (!(this->isValidDate(date)) || !(this->isValidDelim(line)) || val == -1)
-		return ;
-	this->getDateAndPrint(date, val);
-}
-
-bool	BitcoinExchange::calculate(std::string inf)
-{
-	std::ifstream	infile(inf.c_str());
-	std::string		line;
-
-	if (infile.fail())
-	{
-		std::cout << "Error: Input file Error" << std::endl;
-		infile.close();
-		return (false);
-	}
-	getline (infile, line);
-	if (line.compare("data | value") == 0)
-	{
-		std::cout << "Error: Invalid File Format" << std::endl;
-		infile.close();
-		return (false);
-	}
-	else
-	{
-		while (getline(infile, line))
+		if (delimiter == '|')
 		{
-			this->parseDates(line);
+			input->date = date;
+			input->value = value;
+			return true;
 		}
 	}
-	infile.close();
-	return (true);
+	std::cout << "Error: bad format => " << line << std::endl;
+	return false;
 }
 
+bool checkDate(std::string date)
+{
+    std::tm t;
+    std::istringstream is(date);
+	int y,m,d;
+    char delimiter;
+    std::time_t when;
+    const std::tm *norm;
+
+    memset(&t, 0, sizeof(t));
+    if (is >> y >> delimiter >> m >> delimiter >> d)
+    {
+        t.tm_year = y - 1900;
+        t.tm_mon = m - 1;
+        t.tm_mday = d;
+        t.tm_isdst = -1;
+        when = std::mktime(&t);
+        norm = std::localtime(&when);
+        if (norm->tm_mday == d
+			&& norm->tm_mon  == m - 1
+			&& norm->tm_year == y - 1900)
+		{
+			std::cout << d << " " << m << " " << y << std::endl;
+			return true;
+		}
+    }
+    std::cout << "Error: bad date => " << date << std::endl;
+    return false;
+}
+
+bool checkValue(float value)
+{
+	if (value < 0)
+	{
+		std::cout << "Error: not a positive number\n";
+		return false;
+	}
+	if (value > 1000)
+	{
+		std::cout << "Error: too large a number\n";
+		return false;
+	}
+	return true;
+}
+
+void getResult(t_input input, std::map<std::string, float> database)
+{
+	std::map<std::string, float>::iterator it = database.lower_bound(input.date);
+	
+	if (it->first != input.date)
+	{
+		if (it != database.begin())
+			it--;
+		else if (it == database.begin())
+		{
+			std::cout << "Error: date is too old\n";
+			return ;
+		}
+	}
+	std::cout << input.date << " => " << input.value  << " = " << input.value * it->second << std::endl;
+	return ;
+}
+
+void bitcoinExchanger(std::fstream& inputFile)
+{
+	std::string line;
+	t_input input;
+	std::map<std::string, float> database;
+
+	database = fileToMap();
+	for(;std::getline(inputFile, line);)
+	{
+		if (line == "date | value")
+			continue ;
+		if (checkLine(line, &input) && checkDate(input.date) && checkValue(input.value))
+			getResult(input, database);
+	}
+}
