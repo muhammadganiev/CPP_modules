@@ -1,23 +1,24 @@
-#pragma once
+#ifndef BITCOINEXCHANGE_HPP
+#define BITCOINEXCHANGE_HPP
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
-#include <map>
+#include <fstream>
+#include <utility>
+#include <algorithm>
+#include <vector>
+#include <sstream>
 #include <ctime>
-#include <cstring>
+#include <iomanip>
+#include <cmath>
 
-typedef struct	s_input
-{
-	std::string date;
-	float value;
-} t_input;
+bool		is_valid_date(const std::string& date);
+std::string	is_valid_value(const std::string& value);
+bool		file_check(const std::string fileName, std::ifstream &file);
+void		mark_invalid_input(std::vector<std::pair<std::string, std::string> > &_v);
+bool		fill_input(std::ifstream &file, std::vector<std::pair<std::string, std::string> > &_v);
+void		fill_data_base(std::ifstream &file, std::vector<std::pair<std::string, double> > &_vData);
+int			binary_search(const std::string& targetDate, const std::vector<std::pair<std::string, double> >& _vData);
+void		print_and_handle(const std::vector<std::pair<std::string, std::string> > &_v, const std::vector<std::pair<std::string, double> > &_vData);
 
-class FailToOpenFileException : public std::exception
-{
-	public:
-		virtual const char* what() const throw();
-};
-
-void bitcoinExchanger(std::fstream& inputFile);
+#endif

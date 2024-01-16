@@ -1,27 +1,39 @@
 #ifndef RPN_HPP
 #define RPN_HPP
 
+#include <stack>
 #include <iostream>
 #include <string>
-#include <stack>
+#include <sstream>
+
+typedef enum
+{ 
+  addition			= '+',
+  division			= '/',
+  subtraction		= '-', 
+  multiplication	= '*',
+} operant_t; 
 
 class RPN
 {
-    private:
-        std::string			_rpn;
-        std::stack<char>	_rpn_stack;
-		std::stack<int>		_rpn_num;
-		bool				_div_zero;
+	private:
+		RPN();
+		RPN(const RPN &);
+		RPN &operator=(const RPN &);
 
-		void	fillStack(std::string expr);
-		void	calculate();
-		
 	public:
-        RPN();
-		RPN(std::string	argv);
-        RPN(const RPN &object);
-        RPN &operator=(const RPN &rhs);
-        ~RPN();
+		static std::string	param;
+		static int			count;
+		static float		val;
+		static float		first;
+		static float		second;
+		static std::stack<float> _sVal;
+		static std::stack<char> _sOperant;
+
+		static	void	word_count(std::string param);
+		static bool	fill_and_check_string(std::string* arr);
+		static bool	polish_handle(std::string const  *arr);
+		~RPN();
 };
 
 #endif

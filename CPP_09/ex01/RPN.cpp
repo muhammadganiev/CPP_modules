@@ -1,82 +1,89 @@
 #include "RPN.hpp"
 
-RPN::RPN()
+int		RPN::count = 0;
+float	RPN::val = 0;
+float	RPN::first = 0;
+float	RPN::second = 0;
+std::string RPN::param = "";
+std::stack<float> RPN::_sVal;
+std::stack<char> RPN::_sOperant;
+
+RPN::RPN() {}
+RPN::~RPN() {}
+RPN &RPN::operator=(const RPN &) {return *this;}
+RPN::RPN(const RPN &) {}
+
+void	RPN::word_count(std::string param)
 {
+    std::stringstream ss;
+    std::string word;
+	ss << param;
+	while (ss >> word)
+        count++;
 }
 
-RPN::RPN(std::string argv)
+bool	RPN::fill_and_check_string(std::string* arr)
 {
-	this->_div_zero = true;
-	if (argv.size() > 3)
+    std::stringstream ss(param);
+    std::string word;
+    for (int i = 0; i < count; i++)
 	{
-        this->fillStack(argv);
-		if (_div_zero == false)
-		{
-			std::cout << "Dividing by zero" << std::endl;
-			return ;
+        ss >> arr[i];
+		if (arr[i].length() != 1) {
+				return(false);
 		}
-		std::cout << this->_rpn_num.top() << std::endl;
-    }
-}
-
-RPN::RPN(const RPN &object)
-{
-    *this = object;
-}
-
-RPN &RPN::operator=(const RPN &rhs)
-{
-    if (this != &rhs)
-    {
-		this->_rpn_stack = rhs._rpn_stack;
-		this->_rpn_num = rhs._rpn_num;
-    }
-    return (*this);
-}
-
-RPN::~RPN()
-{
-}
-
-
-void	RPN::calculate()
-{
-	int	operand1, operand2;
-	char operation;
-
-	operand2 = this->_rpn_num.top();
-	this->_rpn_num.pop();
-	operand1 = this->_rpn_num.top();
-	this->_rpn_num.pop();
-	operation = this->_rpn_stack.top();
-	this->_rpn_stack.pop();
-	if (operation == '/' && operand2 == 0)
-		this->_div_zero = false;
-	if (operation == '*')
-		this->_rpn_num.push(operand1 * operand2);
-	else if (operation == '/' && operand2 != 0)
-		this->_rpn_num.push(operand1 / operand2);
-	else if (operation == '-')
-		this->_rpn_num.push(operand1 - operand2);
-	else if (operation == '+')
-		this->_rpn_num.push(operand1 + operand2);
-}
-
-void	RPN::fillStack(std::string expr)
-{
-	int	expr_size;
-
-	expr_size = expr.size();
-	for (int i = 0; i < expr_size; i++)
-	{
-		if (expr[i] != ' ')
+		else if (!std::isdigit(arr[i][0]) && arr[i][0] != '-' && arr[i][0] != '+' \
+				&& arr[i][0] != '*' && arr[i][0] != '/')
 		{
-			if (isdigit(expr[i]) != 0)
-				this->_rpn_num.push(expr[i] - '0');
-			else
-				this->_rpn_stack.push(expr[i]);
-			if (this->_rpn_stack.size() == 1 && this->_rpn_num.size() >= 2)
-				calculate();
+			return(false);
 		}
 	}
+	return(true);
+}
+
+bool	RPN::polish_handle(std::string const *arr)
+{
+	int		i = 0;
+	char	oper;
+
+	while (i < count)
+	{
+		if (isdigit(arr[i][0]))
+		{
+			val = atof(arr[i].c_str());
+			_sVal.push(val);
+		}
+		else if (!isdigit(arr[i][0]) && _sVal.size() < 2)
+			return (false);
+		else if (!isdigit(arr[i][0]))
+		{
+			_sOperant.push(arr[i][0]);
+		}
+		if (_sVal.size() >= 2 && _sOperant.size() >= 1)
+		{
+			oper = _sOperant.top();
+			_sOperant.pop();
+			second = _sVal.top();
+			_sVal.pop();
+			first = _sVal.top();
+			_sVal.pop();
+			switch (oper)
+			{
+				case addition :
+					_sVal.push(first + second);
+					break;
+				case  division :
+					_sVal.push(first / second);
+					break;
+				case subtraction :
+					_sVal.push(first - second);
+					break;
+				case multiplication :
+					_sVal.push(first * second);
+					break;
+			}
+		}
+		i++;
+	}
+	return (true);
 }

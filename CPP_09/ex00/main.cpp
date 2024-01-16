@@ -1,21 +1,33 @@
 #include "BitcoinExchange.hpp"
 
-int main(int ac, char **av)
+//Binary_search algorithm search!
+int main(int argc, char **argv)
 {
-	(void)ac;
-	std::fstream inputFile(av[1], std::ios::in);
-	if (inputFile.fail())
+	if (argc != 2)
 	{
-		std::cout << "Error: Failed to open input file\n";
-		return 1;
+		std::cerr << "Error: Arguments too few" << std::endl;
+		return(EXIT_FAILURE);
 	}
-	try
+	else
 	{
-		bitcoinExchanger(inputFile);
+    	std::ifstream file;
+		std::vector<std::pair<std::string, std::string> > _vInput;
+		std::vector<std::pair<std::string, double> > _vData;
+        if (file_check(argv[1], file) == false)
+		{
+			return (EXIT_FAILURE);
+		}
+		if (fill_input(file, _vInput) == false)
+		{
+        	std::cerr << "Error: File is empty!" << std::endl;
+			return(EXIT_FAILURE);
+		}
+		mark_invalid_input(_vInput);
+		if (!file_check("data.csv", file))
+		{
+			return (EXIT_FAILURE);
+		}
+		fill_data_base(file, _vData);
+		print_and_handle(_vInput, _vData);
 	}
-	catch (std::exception &ex)
-	{
-		std::cout << ex.what() << std::endl;
-	}
-	return 0;
 }
